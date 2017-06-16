@@ -31,7 +31,7 @@ along with Decoda.  If not, see <http://www.gnu.org/licenses/>.
 #include <vector>
 #include <string>
 #include <list>
-#include <hash_set>
+#include <unordered_set>
 #include <hash_map>
 
 //

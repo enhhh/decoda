@@ -36,7 +36,7 @@ along with Decoda.  If not, see <http://www.gnu.org/licenses/>.
 #include <assert.h>
 #include <set>
 #include <hash_map>
-#include <hash_set>
+#include <unordered_set>
 
 // Macro for convenient pointer addition.
 // Essentially treats the last two parameters as DWORDs.  The first
