@@ -24,14 +24,13 @@ along with Decoda.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "LuaDll.h"
 #include "DebugBackend.h"
-
+#include <iostream>
 HINSTANCE g_hInstance = NULL;
 
 BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD reason, LPVOID reserved)
 {
-
     g_hInstance = hInstance;
-
+	std::cout << "dll reason" << reason << std::endl;
     if (reason == DLL_PROCESS_ATTACH)
     {
 
@@ -39,7 +38,9 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD reason, LPVOID reserved)
         // the MSVC debugger to the process being debugged in Decoda to allow
         // LuaInject to be debugged.
         //MessageBox(NULL, "Waiting to attach the debugger", NULL, MB_OK);
-
+#if _DEBUG
+		Sleep(1000 * 10);
+#endif
         if (!DebugBackend::Get().Initialize(hInstance))
         {
             return FALSE;

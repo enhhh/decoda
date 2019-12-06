@@ -42,7 +42,7 @@ void            lua_remove_dll          (unsigned long api, lua_State*, int);
 void            lua_settable_dll        (unsigned long api, lua_State*, int);
 void            lua_gettable_dll        (unsigned long api, lua_State*, int);
 void            lua_rawget_dll          (unsigned long api, lua_State*, int idx);
-void            lua_rawgeti_dll         (unsigned long api, lua_State*, int idx, int n);
+void            lua_rawgeti_dll         (unsigned long api, lua_State*, int idx, lua_Integer n);
 void            lua_rawset_dll          (unsigned long api, lua_State* L, int index);
 void            lua_pushstring_dll      (unsigned long api, lua_State*, const char*);
 void            lua_pushlstring_dll     (unsigned long api, lua_State*, const char*, size_t);
@@ -67,7 +67,7 @@ void            lua_pushglobaltable_dll (unsigned long api, lua_State *L);
 const char*     lua_tostring_dll        (unsigned long api, lua_State*, int);
 const char*     lua_tolstring_dll       (unsigned long api, lua_State*, int, size_t* len);
 int             lua_toboolean_dll       (unsigned long api, lua_State*, int);
-int             lua_tointeger_dll       (unsigned long api, lua_State*, int);
+lua_Integer		lua_tointeger_dll       (unsigned long api, lua_State*, int);
 lua_CFunction   lua_tocfunction_dll     (unsigned long api, lua_State*, int);
 lua_Number      lua_tonumber_dll        (unsigned long api, lua_State*, int);
 void*           lua_touserdata_dll      (unsigned long api, lua_State* L, int index);
@@ -94,7 +94,7 @@ void            lua_getfenv_dll         (unsigned long api, lua_State *L, int in
 int             lua_setfenv_dll         (unsigned long api, lua_State *L, int index);
 void *          lua_newuserdata_dll     (unsigned long api, lua_State *L, size_t size);
 int             lua_checkstack_dll      (unsigned long api, lua_State *L, int extra);
-
+void            lua_rotate_dll          (unsigned long api, lua_State*, int, int);
 /**
  * Similar to lua_pushthread, but will be emulated under Lua 5.0. The return
  * value is true if the function was successful, or false if otherwise. Note

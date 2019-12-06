@@ -741,7 +741,7 @@ void DebugBackend::HookCallback(unsigned long api, lua_State* L, lua_Debug* ar)
             lua_pushstring_dll(api, L, "version_num");
             lua_gettable_dll(api, L, jitTable);
 
-            int version = lua_tointeger_dll(api, L, -1);
+			lua_Integer version = lua_tointeger_dll(api, L, -1);
             if (version >= 20000)
             {
                 vm->luaJitWorkAround = true;
@@ -1744,8 +1744,10 @@ int DebugBackend::IndexChained(unsigned long api, lua_State* L)
     if (lua_isnil_dll(api, L, -1))
     {
         lua_pop_dll(api, L, 1);
+		lua_pushglobaltable_dll(api, L);
         lua_pushvalue_dll(api, L, key);
-        lua_gettable_dll(api, L, table[1]);
+		lua_gettable_dll(api, L, -2);
+		lua_remove_dll(api, L, -2);
     }
     
     // If it wasn't found, get from the global table.

@@ -55,8 +55,9 @@ extern "C"
 	// =====================================================
 
 	typedef double lua_Number;
-	typedef ptrdiff_t lua_Integer;
-
+	//typedef ptrdiff_t lua_Integer;
+	#define LUA_INTEGER		long long
+	typedef LUA_INTEGER lua_Integer;
 	// ===========================
 	// same in Lua 5.1 and Lua 5.2
 	// ===========================
