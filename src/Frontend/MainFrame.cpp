@@ -5117,7 +5117,7 @@ void MainFrame::OnThreadExit(ThreadEvent& event)
     // the project files in linear time.
 
     FileStatusThread* thread = m_fileStatusThread[0];
-    std::unordered_map<std::string, SourceControl::Status> statusMap;
+	std::unordered_map<std::string, SourceControl::Status> statusMap;
 
     for (unsigned int i = 0; i < thread->GetNumFiles(); ++i)
     {

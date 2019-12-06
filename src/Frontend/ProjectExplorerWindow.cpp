@@ -515,7 +515,7 @@ void ProjectExplorerWindow::RemoveFile(Project::File* file)
 void ProjectExplorerWindow::RemoveFiles(const std::vector<Project::File*>& files)
 {
 
-    std::unordered_set<Project::File*> fileSet;
+	std::unordered_set<Project::File*> fileSet;
 
     for (unsigned int i = 0; i < files.size(); ++i)
     {
