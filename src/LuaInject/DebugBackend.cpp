@@ -850,7 +850,7 @@ void DebugBackend::HookCallback(unsigned long api, lua_State* L, lua_Debug* ar)
         } 
         
         //Break if were doing some kind of stepping 
-        if (!onLastStepLine && (m_mode == Mode_StepInto || (m_mode == Mode_StepOver && vm->callCount == 0)))
+        if (!onLastStepLine && (m_mode == Mode_StepInto || (m_mode == Mode_StepOver && vm->callCount <= 0)))
         {
             stop = true;
         }
@@ -878,17 +878,11 @@ void DebugBackend::HookCallback(unsigned long api, lua_State* L, lua_Debug* ar)
         {
             if (GetIsHookEventRet( api, arevent)) // only LUA_HOOKRET for Lua 5.2, can also be LUA_HOOKTAILRET for older versions
             {
-                if (vm->callCount > 0)
-                {
-                    --vm->callCount;
-                }
+                --vm->callCount;
             }
             else if( GetIsHookEventCall( api, arevent)) // only LUA_HOOKCALL for Lua 5.1, can also be LUA_HOOKTAILCALL for newer versions
             {
-                if (m_mode == Mode_StepOver)
-                {
-                    ++vm->callCount;
-                }
+                ++vm->callCount;
             }
         }
 
@@ -1743,19 +1737,19 @@ int DebugBackend::IndexChained(unsigned long api, lua_State* L)
     // If it wasn't found, get from the up value table.
     if (lua_isnil_dll(api, L, -1))
     {
-        lua_pop_dll(api, L, 1);
-		lua_pushglobaltable_dll(api, L);
-        lua_pushvalue_dll(api, L, key);
-		lua_gettable_dll(api, L, -2);
-		lua_remove_dll(api, L, -2);
+		lua_pop_dll(api, L, 1);
+		lua_pushvalue_dll(api, L, key);
+		lua_gettable_dll(api, L, table[1]);
     }
     
     // If it wasn't found, get from the global table.
     if (lua_isnil_dll(api, L, -1))
     {
-        lua_pop_dll(api, L, 1);
-        lua_pushvalue_dll(api, L, key);
-        lua_gettable_dll(api, L, table[2]);
+		lua_pop_dll(api, L, 1);
+		lua_pushglobaltable_dll(api, L);
+		lua_pushvalue_dll(api, L, key);
+		lua_gettable_dll(api, L, -2);
+		lua_remove_dll(api, L, -2);
     }
 
     // If the value is our nil sentinel, convert it to an actual nil.

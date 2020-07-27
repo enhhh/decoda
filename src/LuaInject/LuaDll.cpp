@@ -3290,7 +3290,8 @@ bool LoadLuaFunctions(const std::unordered_map<std::string, DWORD64>& symbols, H
 			luaInterface.registryIndex = -1001000;
 			// starting with Lua 5.2, there is no longer a LUA_GLOBALSINDEX pseudo-index. Instead the global table is stored in the registry at LUA_RIDX_GLOBALS
 			luaInterface.globalsIndex = 2;
-			luaInterface.hookTailCall = LUA_HOOKTAILCALL; // Lua5.2 has LUA_HOOKTAILCALL, but no LUA_HOOKTAILRET
+			// Lua5.3 has LUA_HOOKTAILCALL, but no LUA_HOOKTAILRET. It will cause that the count of return hook is not same as the count of call hook when there is a tail call or more.
+			// luaInterface.hookTailCall = LUA_HOOKTAILCALL;
 			DebugBackend::Get().Message("this is a lua 5.3 application", MessageType_Warning);
 		}
         else if (symbols.find("lua_callk") != symbols.end())
